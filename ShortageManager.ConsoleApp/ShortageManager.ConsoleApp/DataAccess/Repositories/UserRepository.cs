@@ -1,21 +1,22 @@
-﻿using ShortageManager.ConsoleApp.DataAccess.Models;
+﻿using ShortageManager.ConsoleApp.Constants;
+using ShortageManager.ConsoleApp.DataAccess.InOut;
+using ShortageManager.ConsoleApp.DataAccess.Models.UserModel;
 
 namespace ShortageManager.ConsoleApp.DataAccess.Repositories;
 
-public class UserRepository(List<User> users)
+public class UserRepository(List<User> Users, IFileManager jsonFileManager) : IUserRepository
 {
-    public required List<User> Users { get; set; } = users;
-
-    public void Add(User user) 
+    public void Register(User user) 
     { 
         if (Users.Contains(user))
         {
-            Console.WriteLine($"User is by username: `{user.UserName}` is already registered!");
+            Console.WriteLine($"User by username: '{user.UserName}' is already registered!");
             return;
         }
 
         Users.Add(user);
+        jsonFileManager.Append(FilePaths.Users, Users);
     }
 
-
+    public User? GetUser(string username) => Users.FirstOrDefault(u => string.Equals(u.UserName, username, StringComparison.OrdinalIgnoreCase));
 }

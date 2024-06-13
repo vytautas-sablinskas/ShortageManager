@@ -2,7 +2,7 @@
 
 public interface IFileManager
 {
-    public void Write<T>(string filePath, T data);
+    public void Append<T>(string filePath, IEnumerable<T> data);
 
     public IEnumerable<T> Read<T>(string filePath);
 }
