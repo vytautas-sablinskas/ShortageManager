@@ -2,7 +2,7 @@
 
 public class User(string userName, UserRole role)
 {
-    public string UserName { get; } = userName;
+    public string UserName { get; } = userName.Trim();
 
     public UserRole Role { get; } = role;
 

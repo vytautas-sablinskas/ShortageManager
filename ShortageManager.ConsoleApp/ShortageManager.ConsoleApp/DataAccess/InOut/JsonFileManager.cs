@@ -21,7 +21,7 @@ public class JsonFileManager : IFileManager
         return deserializedData;
     }
 
-    public void Append<T>(string filePath, IEnumerable<T> data)
+    public void Write<T>(string filePath, IEnumerable<T> data)
     {
         var dataJson = JsonSerializer.Serialize(data);
         if (string.IsNullOrEmpty(dataJson))

@@ -6,7 +6,13 @@ namespace ShortageManager.ConsoleApp.Services.AppControl.UnauthenticatedAppActio
 
 public class LoginAction(IAuthenticator authenticator, AuthenticatedAppActionFactory authenticatedAppActionFactory) : IAppAction
 {
-    private readonly List<string> _validAuthenticatedInputs = new() { "1", "2", "3", "4" };
+    private readonly List<string> _validAuthenticatedInputs = new() 
+    { 
+        AuthenticatedActions.RegisterShortage, 
+        AuthenticatedActions.DeleteShortage, 
+        AuthenticatedActions.ListShortages, 
+        AuthenticatedActions.Logout 
+    };
 
     public void Execute()
     {
@@ -54,7 +60,7 @@ public class LoginAction(IAuthenticator authenticator, AuthenticatedAppActionFac
             var action = authenticatedAppActionFactory.GetAction(input);
             action.Execute();
 
-            if (input == "4")
+            if (action is LogoutAction)
             {
                 return;
             }

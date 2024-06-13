@@ -1,4 +1,5 @@
-﻿using ShortageManager.ConsoleApp.DataAccess.Repositories;
+﻿using ShortageManager.ConsoleApp.Constants;
+using ShortageManager.ConsoleApp.DataAccess.Repositories;
 using ShortageManager.ConsoleApp.Services.AppControl.AuthenticatedAppActions;
 using ShortageManager.ConsoleApp.Services.Authentication;
 
@@ -13,10 +14,10 @@ public class UnauthenticatedAppActionFactory(
     {
         return input switch
         {
-            "1" => new LoginAction(authenticator, authenticatedAppActionFactory),
-            "2" => new RegisterAction(userRepository),
-            "3" => new ExitApplicationAction(),
-            _ => throw new ArgumentException("Invalid action input")
+            UnauthenticatedActions.Login => new LoginAction(authenticator, authenticatedAppActionFactory),
+            UnauthenticatedActions.Register => new RegisterAction(userRepository),
+            UnauthenticatedActions.ExitApp => new ExitApplicationAction(),
+            _ => throw new ArgumentException("Invalid unauthenticated action input")
         };
     }
 }
