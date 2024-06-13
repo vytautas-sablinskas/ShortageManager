@@ -30,4 +30,9 @@ public class ShortageService(IShortageRepository shortageRepository, IFileManage
 
         return true;
     }
+
+    public bool Delete(Shortage shortageToRemove)
+    {
+        return true;
+    }
 }

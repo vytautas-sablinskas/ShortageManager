@@ -1,11 +1,14 @@
-﻿namespace ShortageManager.ConsoleApp.DataAccess.Models.ShortageModel;
+﻿using ShortageManager.ConsoleApp.DataAccess.Models.UserModel;
+
+namespace ShortageManager.ConsoleApp.DataAccess.Models.ShortageModel;
 
 public class Shortage(
     string title, 
     string name, 
     RoomType room, 
     ShortageCategory category, 
-    int priority)
+    int priority,
+    User creator)
 {
     public string Title { get; } = title.Trim();
     public string Name { get; } = name.Trim();
@@ -13,6 +16,7 @@ public class Shortage(
     public RoomType Room { get; } = room;
     public DateTime CreatedOn { get; } = DateTime.Now;
     public ShortageCategory Category { get; } = category;
+    public virtual User Creator { get; } = creator;
 
     public override bool Equals(object? obj)
     {
