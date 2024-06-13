@@ -2,16 +2,17 @@
 using ShortageManager.ConsoleApp.Constants;
 using ShortageManager.ConsoleApp.DataAccess.Repositories;
 using ShortageManager.ConsoleApp.Services.AppControl.UnauthenticatedAppActions;
+using ShortageManager.ConsoleApp.Services.ShortageService;
 
 namespace ShortageManager.ConsoleApp.Services.AppControl.AuthenticatedAppActions;
 
-public class AuthenticatedAppActionFactory(IShortageRepository shortageRepository)
+public class AuthenticatedAppActionFactory(IShortageService shortageService)
 {
     public IAppAction GetAction(string input)
     {
         return input switch
         {
-            AuthenticatedActions.RegisterShortage => new RegisterShortageAction(shortageRepository),
+            AuthenticatedActions.RegisterShortage => new RegisterShortageAction(shortageService),
             AuthenticatedActions.DeleteShortage => new ExitApplicationAction(),
             AuthenticatedActions.ListShortages => new ExitApplicationAction(),
             AuthenticatedActions.Logout => new LogoutAction(),

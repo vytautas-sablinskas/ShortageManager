@@ -1,31 +1,16 @@
-﻿using ShortageManager.ConsoleApp.Constants;
-using ShortageManager.ConsoleApp.DataAccess.InOut;
-using ShortageManager.ConsoleApp.DataAccess.Models.ShortageModel;
+﻿using ShortageManager.ConsoleApp.DataAccess.Models.ShortageModel;
 
 namespace ShortageManager.ConsoleApp.DataAccess.Repositories;
 
-public class ShortageRepository(List<Shortage> Shortages, IFileManager jsonFileManager) : IShortageRepository
+public class ShortageRepository(List<Shortage> shortages) : IShortageRepository
 {
-    public bool Register(Shortage shortageToAdd)
+    public IEnumerable<Shortage> GetShortages() => shortages;
+
+    public void Add(Shortage shortage) => shortages.Add(shortage);
+
+    public void Update(Shortage oldShortage, Shortage newShortage)
     {
-        if (!Shortages.Contains(shortageToAdd))
-        {
-            Shortages.Add(shortageToAdd);
-            jsonFileManager.Write(FilePaths.Shortages, Shortages);
-            return true;
-        }
-
-        var existingShortage = Shortages.FirstOrDefault(shortageToAdd);
-        if (existingShortage.Priority >= shortageToAdd.Priority)
-        {
-            return false;
-        }
-
-        Shortages.Remove(existingShortage);
-        Shortages.Add(shortageToAdd);
-
-        jsonFileManager.Write(FilePaths.Shortages, Shortages);
-
-        return true;
+        shortages.Remove(oldShortage);
+        shortages.Add(newShortage);
     }
 }

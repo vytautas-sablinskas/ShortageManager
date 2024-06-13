@@ -4,7 +4,7 @@ using ShortageManager.ConsoleApp.Services.Authentication;
 
 namespace ShortageManager.ConsoleApp.Services.AppControl.UnauthenticatedAppActions;
 
-public class LoginAction(IAuthenticator authenticator, AuthenticatedAppActionFactory authenticatedAppActionFactory) : IAppAction
+public class LoginAction(IUserService userService, AuthenticatedAppActionFactory authenticatedAppActionFactory) : IAppAction
 {
     private readonly List<string> _validAuthenticatedInputs = new() 
     { 
@@ -30,7 +30,7 @@ public class LoginAction(IAuthenticator authenticator, AuthenticatedAppActionFac
                 return;
             }
 
-            var isLoginSuccessful = authenticator.Login(userToLogin);
+            var isLoginSuccessful = userService.Login(userToLogin);
             if (!isLoginSuccessful)
             {
                 Console.Clear();

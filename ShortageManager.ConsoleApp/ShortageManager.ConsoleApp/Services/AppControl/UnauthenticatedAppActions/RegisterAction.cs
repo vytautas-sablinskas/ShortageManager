@@ -1,10 +1,11 @@
 ﻿
 using ShortageManager.ConsoleApp.DataAccess.Models.UserModel;
 using ShortageManager.ConsoleApp.DataAccess.Repositories;
+using ShortageManager.ConsoleApp.Services.Authentication;
 
 namespace ShortageManager.ConsoleApp.Services.AppControl.UnauthenticatedAppActions;
 
-public class RegisterAction(IUserRepository userRepository) : IAppAction
+public class RegisterAction(IUserRepository userRepository, IUserService authenticator) : IAppAction
 {
     private const string AdministratorRole = "1";
 
@@ -36,9 +37,9 @@ public class RegisterAction(IUserRepository userRepository) : IAppAction
             var permissionsToGive = Console.ReadLine()?
                                            .Trim();
             var userRole = permissionsToGive == AdministratorRole ? UserRole.Administrator : UserRole.User;
-            
-            var userToRegister = new User(usernameToRegister, userRole);
-            userRepository.Register(userToRegister);
+  
+            authenticator.Register(usernameToRegister, userRole);
+
             Console.Clear();
             Console.WriteLine($"User with username '{usernameToRegister}' was successfully registered!\n");
             

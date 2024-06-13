@@ -1,10 +1,10 @@
 ﻿using ShortageManager.ConsoleApp.DataAccess.Models.ShortageModel;
-using ShortageManager.ConsoleApp.DataAccess.Repositories;
+using ShortageManager.ConsoleApp.Services.ShortageService;
 using ShortageManager.ConsoleApp.Utils;
 
 namespace ShortageManager.ConsoleApp.Services.AppControl.AuthenticatedAppActions;
 
-public class RegisterShortageAction(IShortageRepository shortageRepository) : IAppAction
+public class RegisterShortageAction(IShortageService shortageService) : IAppAction
 {
     public void Execute()
     {
@@ -17,7 +17,7 @@ public class RegisterShortageAction(IShortageRepository shortageRepository) : IA
         var priority = InputPrompter.PromptInput<int>("Enter the priority of shortage:", priorityInput => int.TryParse(priorityInput, out int result), "Priority must be an integer");
 
         var shortage = new Shortage(title, name, room, category, priority);
-        var newShortageWasRegistered = shortageRepository.Register(shortage);
+        var newShortageWasRegistered = shortageService.Register(shortage);
         
         if (!newShortageWasRegistered)
         {

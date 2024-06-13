@@ -4,5 +4,9 @@ namespace ShortageManager.ConsoleApp.DataAccess.Repositories;
 
 public interface IShortageRepository
 {
-    bool Register(Shortage shortageToAdd);
+    IEnumerable<Shortage> GetShortages();
+
+    void Add(Shortage shortage);
+
+    void Update(Shortage oldShortage, Shortage newShortage);
 }

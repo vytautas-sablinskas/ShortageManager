@@ -4,7 +4,9 @@ namespace ShortageManager.ConsoleApp.DataAccess.Repositories;
 
 public interface IUserRepository
 {
-    void Register(User user);
-
     User? GetUser(string username);
+
+    IEnumerable<User> GetUsers();
+
+    void Add(User user);
 }
