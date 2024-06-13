@@ -8,5 +8,7 @@ public interface IShortageRepository
 
     void Add(Shortage shortage);
 
+    void Delete(Shortage shortage);
+
     void Update(Shortage oldShortage, Shortage newShortage);
 }

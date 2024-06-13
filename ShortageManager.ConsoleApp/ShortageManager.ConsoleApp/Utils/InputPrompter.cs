@@ -33,10 +33,9 @@ public static class InputPrompter
 
         while (true)
         {
-            TEnum result;
             var input = Console.ReadLine()?
                            .Trim();
-            if (Enum.TryParse(input, true, out result) && Enum.IsDefined(typeof(TEnum), result))
+            if (Enum.TryParse(input, true, out TEnum result) && Enum.IsDefined(typeof(TEnum), result))
             {
                 return result;
             }

@@ -8,6 +8,8 @@ public class ShortageRepository(List<Shortage> shortages) : IShortageRepository
 
     public void Add(Shortage shortage) => shortages.Add(shortage);
 
+    public void Delete(Shortage shortage) => shortages.Remove(shortage);
+
     public void Update(Shortage oldShortage, Shortage newShortage)
     {
         shortages.Remove(oldShortage);

@@ -24,7 +24,7 @@ internal class Program
         IUserRepository userRepository = new UserRepository(users);
         IShortageRepository shortageRepository = new ShortageRepository(shortages);
         IUserService userService = new UserService(userRepository, jsonFileManager);
-        IShortageService shortageService = new ShortageService(shortageRepository, jsonFileManager);
+        IShortageService shortageService = new ShortageService(shortageRepository, userRepository, jsonFileManager);
 
         var authenticatedAppActionFactory = new AuthenticatedAppActionFactory(shortageService, userRepository);
         var unauthenticatedAppActionFactory = new UnauthenticatedAppActionFactory(userService, authenticatedAppActionFactory, userRepository);

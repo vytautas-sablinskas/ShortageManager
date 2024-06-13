@@ -13,7 +13,7 @@ public class AuthenticatedAppActionFactory(IShortageService shortageService, IUs
         return input switch
         {
             AuthenticatedActions.RegisterShortage => new RegisterShortageAction(shortageService, userRepository),
-            AuthenticatedActions.DeleteShortage => new ExitApplicationAction(),
+            AuthenticatedActions.DeleteShortage => new DeleteShortageAction(shortageService),
             AuthenticatedActions.ListShortages => new ExitApplicationAction(),
             AuthenticatedActions.Logout => new LogoutAction(),
             _ => throw new ArgumentException("Invalid authenticated action input")

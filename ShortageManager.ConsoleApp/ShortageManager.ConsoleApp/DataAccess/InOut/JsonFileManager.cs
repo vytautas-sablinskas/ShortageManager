@@ -12,6 +12,11 @@ public class JsonFileManager : IFileManager
         }
 
         string jsonData = File.ReadAllText(filePath);
+        if (string.IsNullOrEmpty(jsonData))
+        {
+            return new List<T>();
+        }
+
         var deserializedData = JsonSerializer.Deserialize<IEnumerable<T>>(jsonData);
         if (deserializedData == null)
         {
