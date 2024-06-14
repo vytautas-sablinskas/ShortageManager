@@ -14,7 +14,9 @@ namespace ShortageManager.ConsoleApp;
 internal class Program
 {
     private static void Main(string[] args)
-    { 
+    {
+        SetupDataFolder();
+
         IFileManager jsonFileManager = new JsonFileManager();
         var users = jsonFileManager.Read<User>(FilePaths.Users)
                                    .ToList();
@@ -31,5 +33,13 @@ internal class Program
         var appController = new AppController(unauthenticatedAppActionFactory);
 
         appController.RunShortageManagerApp();
+    }
+
+    private static void SetupDataFolder()
+    {
+        if (!File.Exists(FilePaths.DataFolder))
+        {
+            Directory.CreateDirectory(FilePaths.DataFolder);
+        }
     }
 }
