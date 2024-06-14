@@ -1,6 +1,6 @@
-﻿using ShortageManager.ConsoleApp.DataAccess.Models.AppSessionModel;
-using ShortageManager.ConsoleApp.DataAccess.Models.ShortageModel;
+﻿using ShortageManager.ConsoleApp.DataAccess.Models.ShortageModel;
 using ShortageManager.ConsoleApp.DataAccess.Repositories;
+using ShortageManager.ConsoleApp.Services.AppSessionService;
 using ShortageManager.ConsoleApp.Services.ShortageService;
 using ShortageManager.ConsoleApp.Utils;
 
@@ -18,8 +18,7 @@ public class RegisterShortageAction(IShortageService shortageService, IUserRepos
         var category = InputPrompter.PromptEnumInput<ShortageCategory>("Enter the category:", "Invalid category. Please try again.");
         var priority = InputPrompter.PromptInput<int>("Enter the priority of shortage:", priorityInput => int.TryParse(priorityInput, out int result), "Priority must be an integer");
 
-        var session = AppSession.Instance;
-        var creator = userRepository.GetUser(session.UserName);
+        var creator = userRepository.GetUser(AppSession.UserName);
         if (creator == null)
         {
             throw new InvalidDataException("User trying to create shortage was not found in database!");
@@ -27,7 +26,7 @@ public class RegisterShortageAction(IShortageService shortageService, IUserRepos
 
         var shortage = new Shortage(title, name, room, category, priority, creator);
         var newShortageWasRegistered = shortageService.Register(shortage);
-        
+
         if (!newShortageWasRegistered)
         {
             Console.WriteLine("[Warning] Shortage with given name and room was already registered and its priority was lower or equal, so it wasn't updated!\nPress enter to continue.");

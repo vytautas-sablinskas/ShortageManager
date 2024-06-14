@@ -6,12 +6,12 @@ namespace ShortageManager.ConsoleApp.Services.AppControl.UnauthenticatedAppActio
 
 public class LoginAction(IUserService userService, AuthenticatedAppActionFactory authenticatedAppActionFactory) : IAppAction
 {
-    private readonly List<string> _validAuthenticatedInputs = new() 
-    { 
-        AuthenticatedActions.RegisterShortage, 
-        AuthenticatedActions.DeleteShortage, 
-        AuthenticatedActions.ListShortages, 
-        AuthenticatedActions.Logout 
+    private readonly List<string> _validAuthenticatedActionInputs = new()
+    {
+        AuthenticatedActions.RegisterShortage,
+        AuthenticatedActions.DeleteShortage,
+        AuthenticatedActions.ListShortages,
+        AuthenticatedActions.Logout
     };
 
     public void Execute()
@@ -52,7 +52,7 @@ public class LoginAction(IUserService userService, AuthenticatedAppActionFactory
             Console.WriteLine(NavigationMessages.AuthenticatedMainPageMessage);
             var input = Console.ReadLine()?
                                .Trim();
-            if (string.IsNullOrEmpty(input) || !_validAuthenticatedInputs.Contains(input))
+            if (string.IsNullOrEmpty(input) || !_validAuthenticatedActionInputs.Contains(input))
             {
                 continue;
             }

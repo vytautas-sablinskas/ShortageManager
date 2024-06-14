@@ -1,5 +1,4 @@
-﻿
-using ShortageManager.ConsoleApp.DataAccess.Models.UserModel;
+﻿using ShortageManager.ConsoleApp.DataAccess.Models.UserModel;
 using ShortageManager.ConsoleApp.DataAccess.Repositories;
 using ShortageManager.ConsoleApp.Services.Authentication;
 
@@ -7,13 +6,14 @@ namespace ShortageManager.ConsoleApp.Services.AppControl.UnauthenticatedAppActio
 
 public class RegisterAction(IUserRepository userRepository, IUserService authenticator) : IAppAction
 {
-    private const string AdministratorRole = "1";
-
     public void Execute()
     {
+        const string AdministratorRole = "1";
+
         Console.Clear();
 
-        while (true)
+        var isUserRegistered = false;
+        while (!isUserRegistered)
         {
             Console.WriteLine("Press enter without typing anything to go back to menu.");
             Console.WriteLine("Enter your username:");
@@ -34,16 +34,16 @@ public class RegisterAction(IUserRepository userRepository, IUserService authent
             }
 
             Console.WriteLine("Enter user role (1 - administrator, any other letter or number - simple user)");
-            var permissionsToGive = Console.ReadLine()?
+            var selectedRole = Console.ReadLine()?
                                            .Trim();
-            var userRole = permissionsToGive == AdministratorRole ? UserRole.Administrator : UserRole.User;
-  
+            var userRole = selectedRole == AdministratorRole ? UserRole.Administrator : UserRole.User;
+
             authenticator.Register(usernameToRegister, userRole);
 
             Console.Clear();
             Console.WriteLine($"User with username '{usernameToRegister}' was successfully registered!\n");
-            
-            break;
+
+            isUserRegistered = true;
         }
     }
 }

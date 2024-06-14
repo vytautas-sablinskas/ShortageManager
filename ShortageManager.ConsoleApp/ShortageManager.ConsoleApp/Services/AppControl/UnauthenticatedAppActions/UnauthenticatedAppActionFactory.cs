@@ -6,8 +6,8 @@ using ShortageManager.ConsoleApp.Services.Authentication;
 namespace ShortageManager.ConsoleApp.Services.AppControl.UnauthenticatedAppActions;
 
 public class UnauthenticatedAppActionFactory(
-    IUserService userService, 
-    AuthenticatedAppActionFactory authenticatedAppActionFactory, 
+    IUserService userService,
+    AuthenticatedAppActionFactory authenticatedAppActionFactory,
     IUserRepository userRepository)
 {
     public IAppAction GetAction(string input)

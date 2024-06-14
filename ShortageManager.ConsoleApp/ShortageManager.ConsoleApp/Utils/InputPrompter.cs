@@ -1,9 +1,14 @@
-﻿using System;
-
-namespace ShortageManager.ConsoleApp.Utils;
+﻿namespace ShortageManager.ConsoleApp.Utils;
 
 public static class InputPrompter
 {
+    public static string PromptInput(string message)
+    {
+        Console.WriteLine(message);
+
+        return Console.ReadLine();
+    }
+
     public static T PromptInput<T>(string message, Func<string?, bool> isValid, string errorMessage)
     {
         string? input;

@@ -1,8 +1,8 @@
 ﻿using ShortageManager.ConsoleApp.Constants;
 using ShortageManager.ConsoleApp.DataAccess.InOut;
-using ShortageManager.ConsoleApp.DataAccess.Models.AppSessionModel;
 using ShortageManager.ConsoleApp.DataAccess.Models.UserModel;
 using ShortageManager.ConsoleApp.DataAccess.Repositories;
+using ShortageManager.ConsoleApp.Services.AppSessionService;
 
 namespace ShortageManager.ConsoleApp.Services.Authentication;
 
@@ -18,8 +18,7 @@ public class UserService(IUserRepository userRepository, IFileManager jsonFileMa
             return false;
         }
 
-        var appSession = AppSession.Instance;
-        appSession.UserName = username;
+        AppSession.UserName = username;
         return true;
     }
 
@@ -47,8 +46,7 @@ public class UserService(IUserRepository userRepository, IFileManager jsonFileMa
 
     public void Logout()
     {
-        var appSession = AppSession.Instance;
-        appSession.UserName = "";
+        AppSession.UserName = "";
         Console.WriteLine("Successfully logged out!");
     }
 }

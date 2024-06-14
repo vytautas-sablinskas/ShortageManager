@@ -2,7 +2,7 @@
 
 public class NavigationMessages
 {
-    public const string StartingPageMessage =  "Welcome To Shortage Manager App! Available actions:\n" +
+    public const string StartingPageMessage = "Welcome To Shortage Manager App! Available actions:\n" +
                                                "1. Login\n" +
                                                "2. Register\n" +
                                                "3. Exit the application\n" +

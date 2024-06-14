@@ -1,14 +1,28 @@
 ﻿using ShortageManager.ConsoleApp.Constants;
 using ShortageManager.ConsoleApp.DataAccess.InOut;
-using ShortageManager.ConsoleApp.DataAccess.Models.AppSessionModel;
 using ShortageManager.ConsoleApp.DataAccess.Models.ShortageModel;
 using ShortageManager.ConsoleApp.DataAccess.Models.UserModel;
 using ShortageManager.ConsoleApp.DataAccess.Repositories;
+using ShortageManager.ConsoleApp.Services.AppSessionService;
+using ShortageManager.ConsoleApp.Services.ShortageFilter;
 
 namespace ShortageManager.ConsoleApp.Services.ShortageService;
 
 public class ShortageService(IShortageRepository shortageRepository, IUserRepository userRepository, IFileManager jsonFileManager) : IShortageService
 {
+    public IEnumerable<Shortage> GetShortagesByPermissionsAndFilters(Dictionary<ShortageFilterType, List<string>> selectedFilters)
+    {
+        var user = userRepository.GetUser(AppSession.UserName);
+        if (user == null)
+        {
+            throw new InvalidOperationException("User trying to access shortages was not found in database!");
+        }
+
+        var filteredShortages = shortageRepository.GetShortagesByPermissionsAndFilters(user, selectedFilters);
+
+        return filteredShortages;
+    }
+
     public bool Register(Shortage shortageToAdd)
     {
         var shortages = shortageRepository.GetShortages();
@@ -42,14 +56,13 @@ public class ShortageService(IShortageRepository shortageRepository, IUserReposi
             return false;
         }
 
-        var session = AppSession.Instance;
-        var user = userRepository.GetUser(session.UserName);
+        var user = userRepository.GetUser(AppSession.UserName);
         if (user == null)
         {
             return false;
         }
 
-        if (existingShortage.Creator.UserName != user.UserName && 
+        if (existingShortage.Creator.UserName != user.UserName &&
             user.Role != UserRole.Administrator)
         {
             return false;

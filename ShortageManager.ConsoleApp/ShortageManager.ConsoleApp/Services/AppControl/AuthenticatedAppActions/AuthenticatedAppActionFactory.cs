@@ -1,7 +1,5 @@
-﻿
-using ShortageManager.ConsoleApp.Constants;
+﻿using ShortageManager.ConsoleApp.Constants;
 using ShortageManager.ConsoleApp.DataAccess.Repositories;
-using ShortageManager.ConsoleApp.Services.AppControl.UnauthenticatedAppActions;
 using ShortageManager.ConsoleApp.Services.ShortageService;
 
 namespace ShortageManager.ConsoleApp.Services.AppControl.AuthenticatedAppActions;
@@ -14,7 +12,7 @@ public class AuthenticatedAppActionFactory(IShortageService shortageService, IUs
         {
             AuthenticatedActions.RegisterShortage => new RegisterShortageAction(shortageService, userRepository),
             AuthenticatedActions.DeleteShortage => new DeleteShortageAction(shortageService),
-            AuthenticatedActions.ListShortages => new ExitApplicationAction(),
+            AuthenticatedActions.ListShortages => new ListShortagesAction(shortageService),
             AuthenticatedActions.Logout => new LogoutAction(),
             _ => throw new ArgumentException("Invalid authenticated action input")
         };
