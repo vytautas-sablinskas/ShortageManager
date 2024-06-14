@@ -5,7 +5,12 @@ namespace ShortageManager.ConsoleApp.Services.AppControl;
 
 public class AppController(UnauthenticatedAppActionFactory unauthenticatedAppActionFactory) : IAppController
 {
-    private readonly List<string> _validInputs = new() { { "1" }, { "2" }, { "3" } };
+    private readonly List<string> _validInputs = new()
+    {
+        UnauthenticatedActions.Login,
+        UnauthenticatedActions.Register,
+        UnauthenticatedActions.ExitApp
+    };
 
     public void RunShortageManagerApp()
     {

@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/ShortageManager.ConsoleApp/ShortageManager.ConsoleApp/Data/shortages.json
+/ShortageManager.ConsoleApp/ShortageManager.ConsoleApp/Data/users.json

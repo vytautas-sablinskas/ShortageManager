@@ -2,7 +2,7 @@
 
 namespace ShortageManager.ConsoleApp.Services.Authentication;
 
-public interface IAuthenticator
+public interface IUserService
 {
     bool Login(string username);
 
