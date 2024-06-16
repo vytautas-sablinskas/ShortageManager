@@ -17,21 +17,7 @@ internal class Program
     {
         SetupDataFolder();
 
-        IFileManager jsonFileManager = new JsonFileManager();
-        var users = jsonFileManager.Read<User>(FilePaths.Users)
-                                   .ToList();
-        var shortages = jsonFileManager.Read<Shortage>(FilePaths.Shortages)
-                                       .ToList();
-
-        IUserRepository userRepository = new UserRepository(users);
-        IShortageRepository shortageRepository = new ShortageRepository(shortages);
-        IUserService userService = new UserService(userRepository, jsonFileManager);
-        IShortageService shortageService = new ShortageService(shortageRepository, userRepository, jsonFileManager);
-
-        var authenticatedAppActionFactory = new AuthenticatedAppActionFactory(shortageService, userRepository);
-        var unauthenticatedAppActionFactory = new UnauthenticatedAppActionFactory(userService, authenticatedAppActionFactory, userRepository);
-        var appController = new AppController(unauthenticatedAppActionFactory);
-
+        var appController = InitializeAppController();
         appController.RunShortageManagerApp();
     }
 
@@ -41,5 +27,26 @@ internal class Program
         {
             Directory.CreateDirectory(FilePaths.DataFolder);
         }
+    }
+
+    private static AppController InitializeAppController()
+    {
+        IFileManager jsonFileManager = new JsonFileManager();
+
+        var users = jsonFileManager.Read<User>(FilePaths.Users)
+                                   .ToList();
+        var shortages = jsonFileManager.Read<Shortage>(FilePaths.Shortages)
+                                       .ToList();
+
+        IUserRepository userRepository = new UserRepository(users);
+        IShortageRepository shortageRepository = new ShortageRepository(shortages);
+
+        IUserService userService = new UserService(userRepository, jsonFileManager);
+        IShortageService shortageService = new ShortageService(shortageRepository, userRepository, jsonFileManager);
+
+        var authenticatedAppActionFactory = new AuthenticatedAppActionFactory(shortageService, userRepository);
+        var unauthenticatedAppActionFactory = new UnauthenticatedAppActionFactory(userService, authenticatedAppActionFactory, userRepository);
+
+        return new AppController(unauthenticatedAppActionFactory);
     }
 }
