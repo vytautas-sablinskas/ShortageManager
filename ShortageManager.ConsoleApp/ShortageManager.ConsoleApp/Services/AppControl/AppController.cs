@@ -19,7 +19,7 @@ public class AppController(UnauthenticatedAppActionFactory unauthenticatedAppAct
             Console.WriteLine(NavigationMessages.StartingPageMessage);
             var input = Console.ReadLine()?
                                .Trim();
-            var action = ExecuteUserSelectedAction(input);
+            var action = GetUserSelectedAction(input);
             if (action == null)
             {
                 continue;
@@ -29,12 +29,13 @@ public class AppController(UnauthenticatedAppActionFactory unauthenticatedAppAct
         }
     }
 
-    public IAppAction? ExecuteUserSelectedAction(string? input)
+    public IAppAction? GetUserSelectedAction(string? input)
     {
         if (string.IsNullOrEmpty(input) || !_validInputs.Contains(input))
         {
             Console.Clear();
             Console.WriteLine("Invalid choice was given. Try again!\n");
+
             return null;
         }
 

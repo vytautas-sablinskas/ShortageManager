@@ -34,19 +34,22 @@ public static class InputPrompter
 
     public static TEnum PromptEnumInput<TEnum>(string message, string errorMessage) where TEnum : struct, Enum
     {
-        Console.WriteLine($"{message} (Available options: {string.Join(", ", Enum.GetNames(typeof(TEnum)))})");
-
         while (true)
         {
+            Console.WriteLine($"{message} (Available options: {string.Join(", ", Enum.GetNames(typeof(TEnum)))})");
             var input = Console.ReadLine()?
                            .Trim();
+
+            Console.Clear();
+
             if (Enum.TryParse(input, true, out TEnum result) && Enum.IsDefined(typeof(TEnum), result))
             {
                 return result;
             }
-
-            Console.Clear();
-            Console.WriteLine(errorMessage);
+            else
+            {
+                Console.WriteLine(errorMessage + Environment.NewLine);
+            }
         }
     }
 }
